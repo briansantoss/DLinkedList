@@ -69,10 +69,16 @@ void push(DLinkedList* list,  NodeValue value, NodeValueType value_type) {
     if (!new_node) {
         return;
     }
-
+    
     new_node->prev = NULL;
     new_node->next = list->head;
-
+    
+    if(!is_list_empty(list)) {
+        list->head->prev = new_node;
+    } else {
+        list->tail = new_node;
+    }
+    
     list->head = new_node;
 }
 
@@ -98,6 +104,54 @@ void push_double(DLinkedList* list, double value) {
 
 void push_string(DLinkedList* list, char* value) {
     push(list, (NodeValue) value, STRING_VALUE);
+}
+
+void push_end(DLinkedList* list,  NodeValue value, NodeValueType value_type) {
+    if (!list) {
+        return;
+    }
+
+    Node* new_node = create_node(value, value_type);
+    if (!new_node) {
+        return;
+    }
+
+    new_node->next = NULL;
+
+    if (is_list_empty(list)) {
+        list->head = new_node; 
+        new_node->prev = NULL;
+    } else {
+        // Novo nó passa a ter a cauda como anterior
+        new_node->prev = list->tail;
+        // A cauda passa a apontar para o novo nó como próximo
+        list->tail->next = new_node;
+    }
+    list->tail = new_node;
+}
+
+void push_end_bool(DLinkedList* list, bool value) {
+    push_end(list, (NodeValue) value, BOOL_VALUE);
+}
+
+void push_end_char(DLinkedList* list, char value) {
+    push_end(list, (NodeValue) value, CHAR_VALUE);
+}
+
+void push_end_int(DLinkedList* list, int value) {
+    push_end(list, (NodeValue) value, INT_VALUE);
+}
+
+void push_end_float(DLinkedList* list, float value) {
+    push_end(list, (NodeValue) value, FLOAT_VALUE);
+}
+
+void push_end_double(DLinkedList* list, double value) {
+    push_end(list, (NodeValue) value, DOUBLE_VALUE);
+}
+
+void push_end_string(DLinkedList* list, char* value) {
+    push_end(list, (NodeValue) value, STRING_VALUE);
 }
 
 void from_start(DLinkedList* list) {
@@ -164,9 +218,9 @@ void from_end(DLinkedList* list) {
                 printf("%s", curr->value.string_value);
                 break;
         }
-        printf(" -> ");
+        printf(" <- ");
         
-        curr = curr->next;
+        curr = curr->prev;
     }
     puts("NULL");
 }

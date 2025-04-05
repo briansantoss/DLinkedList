@@ -4,6 +4,7 @@
 
 #include <stdbool.h>
 
+// Definindo os tipos possíveis de um nó da lista
 typedef enum {
     BOOL_VALUE,
     CHAR_VALUE,
@@ -38,7 +39,6 @@ DLinkedList* init_list(void);
 bool is_list_empty(DLinkedList* list);
 Node* create_node(NodeValue value, NodeValueType value_type);
 
-
 // Funções para inserção no início
 void push(DLinkedList* list,  NodeValue value, NodeValueType value_type);
 void push_bool(DLinkedList* list, bool value);
@@ -48,6 +48,16 @@ void push_float(DLinkedList* list, float value);
 void push_double(DLinkedList* list, double value);
 void push_string(DLinkedList* list, char* value);
 
+// Funções para inserção no final
+void push_end(DLinkedList* list,  NodeValue value, NodeValueType value_type);
+void push_end_bool(DLinkedList* list, bool value);
+void push_end_char(DLinkedList* list, char value);
+void push_end_int(DLinkedList* list, int value);
+void push_end_float(DLinkedList* list, float value);
+void push_end_double(DLinkedList* list, double value);
+void push_end_string(DLinkedList* list, char* value);
+
+// Funções para impressão da lista
 void from_start(DLinkedList* list);
 void from_end(DLinkedList* list);
 
