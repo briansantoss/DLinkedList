@@ -48,6 +48,7 @@ Node* create_node(NodeValue value, NodeValueType value_type) {
         case STRING_VALUE:
             char* string_val_copy = (char*) malloc(strlen(value.string_value) + 1);
             if (!string_val_copy) {
+                free(new_node);
                 return NULL;
             }
             strcpy(string_val_copy, value.string_value);
@@ -223,4 +224,29 @@ void from_end(DLinkedList* list) {
         curr = curr->prev;
     }
     puts("NULL");
+}
+
+void free_node(Node* node) {
+    if (node->value_type == STRING_VALUE) {
+        // Libera o espaço para a string
+        free(node->value.string_value);
+    }
+
+    free(node);
+}
+
+void free_list(DLinkedList* list) {
+    Node* curr = list->head; 
+    while (curr) {
+        Node* next = curr->next;
+
+        free_node(curr);
+
+        curr = next;
+    }
+
+    // Atribui NULL aos dois principais ponteiros da lista
+    list->head = list->tail = NULL;
+
+    free(list);
 }

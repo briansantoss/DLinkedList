@@ -24,8 +24,16 @@ int main() {
     push_bool(dlist, true);
 
     push_end_bool(dlist, false);
+
+    push_end_char(dlist, 'c');
     
     // Imprime a lista ligada partindo do começo
+    from_start(dlist);
+
+    // Libera a memória usada pela lista
+    free_list(dlist);
+
+    // Tenta imprimir a lista após liberá-la
     from_start(dlist);
 
     return 0;
